@@ -1,0 +1,78 @@
+<Room>
+	<location name ="Tavern Pulca of Juke">
+		<description>
+You stand at the door of the tavern and look out into the street. 
+To the north you see the busy Tempas Crossing near the edge of the small town. 
+To the east resides the armory that appears to be unoccupied yet the front door is open. 
+To the south you can see the stables and hear the horses rustling around.
+To the west you see the restrooms at the far end of the tavern.
+		</description>
+		<exits>1,-1,-1,-1,-1,-1</exits>
+		<item name = "glass bottle">A glass bottle</item>
+		<item name = "leather armor">Some armor made from cows.</item>
+	</location>
+
+	<location name ="Tempas Crossing">
+		<description>
+You stand in the middle of the crossing. People are yelling at you to move. 
+To the north you see the very ominous dark forest.
+To the east you see the Inn where the inn keeper is smiling at you.
+		</description>
+		<exits>-1,0,2,-1,-1,-1</exits>
+		<item name = "silver">Money</item>
+	</location>
+
+	<location name = "Inn">
+		<description>
+You stand at the door of the Inn and can see several shady figures drinking at the bar. 
+To the west you see the busy Tempas Crossing.
+		</description>
+		<exits>-1,-1,-1,1,-1,-1</exits>
+		<items name= "dagger">Sharp and pointy</items>
+	</location>
+<!--
+	<location name = "Dark Forest">
+		<description = "You feel scared as you stare out into the Dark Forest not being able to make out any definite objects. 
+				   You hear some rustling ahead.
+				   To the south you see the busy Tempas Crossing.">
+		</description>
+		<exits = "south">
+		</exits>
+		<items = "None">
+		</items>
+	</location>
+
+	<location name = "Armory">
+		<description = "You push through the armory doors and see a dwarf who must be in charge. 
+				   You also see beautifully crafted axes and swords along with a crossbow.
+				   To the west you see the busy Tavern Pulca of Juke.">
+		</description>
+		<exits = "west">
+		</exits>
+		<items = "note, sword">
+		</items>
+	</location>
+
+	<location name = "Stables">
+		<description = "You stand in front of the wooden stables and instantly smell manure.
+				   In one of the stables you see a white stallion bucking slightly.
+				   To the north you see the Tavern Pulca of Juke.">
+		</description>
+		<exits = "north">
+		</exits>
+		<items = "leather chaps">
+		</items>
+	</location>
+
+	<location name = "Restrooms">
+		<description = "You stand inside the gentlemen\'92s room which is dimly lit.
+				   You do not hear anyone else in the room.
+				   To the east you see the Tavern Pulca of Juke.">
+		</description>
+		<exits = "east">
+		</exits>
+		<items = "ferret">
+		</items>
+	</location>
+-->
+</Room>
