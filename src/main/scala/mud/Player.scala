@@ -9,7 +9,7 @@ class Player (
   
   def processCommand(commands: String): Unit ={
     //- Parse and act on a command
-    val command  = commands.toLowerCase()
+    val command  = commands.toLowerCase().trim()
     if(command == "help"){
       println("""Select one of the following options:
 1. n (north), s (south), e (east), w (west), u (up), d (down) - for movement
@@ -61,10 +61,34 @@ class Player (
   def getFromInventory(itemName: String): Option[Item]= {
     //- Pull an item out of the inventory (if it exists) and return it.
     val regex = "drop ".r
-    val itemNames = regex.replaceFirstIn(itemName, "")
-    //println("item: " + itemNames)
+    val itemNs = regex.replaceFirstIn(itemName, "")
     
-    //println(inventory)
+    val itemNames = itemNs.trim
+    println(itemNames)
+    val names = inventory.map(_.name)
+    println(names)
+    if (names.contains(itemNames)){
+      println("you found and item")
+      val dropIndex: Int = names.indexOf(itemNames)
+      val itemReturn : Option[Item] = Some(inventory(names.indexOf(itemNames)))
+      val itemIndexs = inventory.zipWithIndex
+      val itemsPrint = inventory.zip(itemIndexs).filter(_._1 != inventory(dropIndex)).map(_._1)
+     // println("this is itemsPrint");print(itemsPrint)
+      inventory = itemsPrint
+      //inventory.diff(List(inventory(dropIndex))) //TODO
+      //go return the item
+       itemReturn match{
+          case Some(itemReturn) => location.dropItem(itemReturn)
+          case None => println("there was no item to grab")
+        }
+      itemReturn
+    }
+    else {
+      println("No item to grab"); None   
+    }
+    
+    
+    /*
     val names = inventory.map(_.toString())
     val nameIndex = names.filter(_.contains(itemNames))
     
@@ -78,8 +102,8 @@ class Player (
       //println(dropIndex)
       val itemReturn : Option[Item] = Some(inventory(names.indexOf(nameIndex(0))))
       
-      val indexs = "0 1 2 3 4 5 6 7 8 9 10".split(" ")
-      val itemsPrint = inventory.zip(indexs).filter(_._1 != inventory(dropIndex)).map(_._1)
+      val itemIndexs = inventory.zipWithIndex
+      val itemsPrint = inventory.zip(itemIndexs).filter(_._1 != inventory(dropIndex)).map(_._1)
      // println("this is itemsPrint");print(itemsPrint)
       inventory = itemsPrint
       //inventory.diff(List(inventory(dropIndex))) //TODO
@@ -91,7 +115,7 @@ class Player (
           case None => println("there was no item to grab")
         }
       itemReturn
-      }
+      }*/
   }
   
   def addToInventory(item: Item): Unit = {
@@ -100,18 +124,21 @@ class Player (
   }
   
   def inventoryListing(): String = {
-    inventory.toString()
-    //val invNames = inventory.map(name)
-    //val regex = "Item(".r
-    //val invNames = regex.replaceFirstIn(inv(0).toString(), "")
-    //println(invNames)
-    //inv(1)
-    //val x: Int = inventory.length
-    //val invArray = Array.fill(inventory.length)("Inventory:"+"\n\t")
-    //for(i <- 0 to (x-1)){
-    //val invString = inventory(i).toString()
-    
-    //}
+   if (inventory.isEmpty){
+     "No items in Inventory"
+   }
+   else {
+      //println(inventory(0).name)
+      
+      val x: Int = inventory.length
+      var invArray = Array.fill(inventory.length+1)("Empty")
+      invArray(0) = "Inventory:"+"\n\t"
+       for(i <- 0 to (x-1)){
+        invArray(i+1) = inventory(i).name + " - " + inventory(i).desc + "\n\t"
+      }
+      //println(invArray.mkString)
+      invArray.mkString
+    }
   }
   
   def move(dir: String): Unit ={

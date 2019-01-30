@@ -9,7 +9,8 @@ class Room(
   def description(): String = {
     val dirs = "north south east west up down".split(" ")
     val exitPrint = exits.zip(dirs).filter(_._1 != -1).map(_._2).mkString(",")
-    name+"\n"+desc+"\n" + "items:" + items.mkString(", ") + "\n" + "exits:" + exitPrint
+    val names = items.map(_.name)
+    name+"\n"+desc+"\n" + "items:" + names.mkString(", ") + "\n" + "exits:" + exitPrint
   }
 
   def getExit(dir: Int): Option[Room] = {
@@ -21,33 +22,29 @@ class Room(
   }
 
   def getItem(itemName: String): Option[Item] ={
-    //println(items(0).toString())
-    val names = items.map(_.toString())
-    val nameIndex = names.filter(_.contains(itemName))
-    
-    //println(nameIndex)
-    if (nameIndex.isEmpty) {
-       None
+    val itemNames = itemName.trim
+    println(itemNames)
+    val names = items.map(_.name)
+    println(names)
+    if (names.contains(itemNames)){
+      println("you found and item")
+      Some(items(names.indexOf(itemNames)))
+      val dropIndex: Int = names.indexOf(itemNames)
+      val itemReturn : Option[Item] = Some(items(names.indexOf(itemNames)))
+      val itemIndexs = items.zipWithIndex
+      val itemsPrint = items.zip(itemIndexs).filter(_._1 != items(dropIndex)).map(_._1)
+     // println("this is itemsPrint");print(itemsPrint)
+      items = itemsPrint
+      itemReturn
     }
     else {
-      //println(Some(items(names.indexOf(nameIndex(0)))))
-      val dropIndex: Int = names.indexOf(nameIndex(0))
-      //println(dropIndex)
-      val itemReturn : Option[Item] = Some(items(names.indexOf(nameIndex(0))))
-      
-      val indexs = "0 1 2 3 4 5 6 7 8 9 10".split(" ")
-      val itemsPrint = items.zip(indexs).filter(_._1 != items(dropIndex)).map(_._1)
-      //println("this is itemsPrint");print(itemsPrint)
-      items = itemsPrint //TODO
-      //println(items)
-      itemReturn
+      println("No item to grab"); None   
     }
   }
 
   def dropItem(item: Item): Unit = {
     items = item :: items
   }
-
 }
 
 object Room {
